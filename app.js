@@ -19,7 +19,7 @@ const app = {
     const listItem = this.renderListItem(dino)
     this.list.appendChild(listItem)
 
-    // TODO: Add the dino to this.dinos
+    this.dinos.push(dino)
 
     ++ this.max
     ev.target.reset()
