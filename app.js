@@ -19,7 +19,7 @@ const app = {
     const listItem = this.renderListItem(dino)
     this.list.insertBefore(listItem, this.list.firstChild)
 
-    this.dinos.push(dino)
+    this.dinos.unshift(dino)
 
     ++ this.max
     ev.target.reset()
