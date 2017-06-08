@@ -22,6 +22,7 @@ const app = {
     // TODO: Add the dino to this.dinos
 
     ++ this.max
+    ev.target.reset()
   },
 
   renderListItem(dino) {
