@@ -1,3 +1,7 @@
 .template {
   display: none;
 }
+
+.actions {
+  float: right;
+}
