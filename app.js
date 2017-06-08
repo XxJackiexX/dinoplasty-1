@@ -29,9 +29,13 @@ const app = {
   },
 
   renderListItem(dino) {
-    const item = document.createElement('li')
-    item.textContent = dino.name
+    const item = this.template.cloneNode(true)
+    item.classList.remove('template')
     item.dataset.id = dino.id
+
+    item
+      .querySelector('.dino-name')
+      .textContent = dino.name
 
     return item
   }
