@@ -8,17 +8,27 @@ const app = {
       .querySelector(selectors.templateSelector)
     document
       .querySelector(selectors.formSelector)
-      .addEventListener('submit', this.addDino.bind(this))
+      .addEventListener('submit', this.addDinoFromForm.bind(this))
+
+    this.load()
   },
 
-  addDino(ev) {
-    ev.preventDefault()
+  load() {
+    // load the JSON from localStorage
+    const dinoJSON = localStorage.getItem('dinos')
 
-    const dino = {
-      id: this.max + 1,
-      name: ev.target.dinoName.value,
+    // convert the JSON back into an array
+    const dinoArray = JSON.parse(dinoJSON)
+
+    // set this.dinos with the dinos from that array
+    if (dinoArray) {
+      dinoArray
+        .reverse()
+        .map(this.addDino.bind(this))
     }
+  },
 
+  addDino(dino) {
     const listItem = this.renderListItem(dino)
     this.list.insertBefore(listItem, this.list.firstChild)
 
@@ -26,6 +36,18 @@ const app = {
     this.save()
 
     ++ this.max
+  },
+
+  addDinoFromForm(ev) {
+    ev.preventDefault()
+
+    const dino = {
+      id: this.max + 1,
+      name: ev.target.dinoName.value,
+    }
+
+    this.addDino(dino)
+    
     ev.target.reset()
   },
 
