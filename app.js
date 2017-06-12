@@ -94,15 +94,25 @@ const app = {
     const listItem = ev.target.closest('.dino')
     const nameField = listItem.querySelector('.dino-name')
 
+    const btn = ev.currentTarget
+    const icon = btn.querySelector('i.fa')
+
     if (nameField.isContentEditable) {
       // make it no longer editable
       nameField.contentEditable = false
+      icon.classList.remove('fa-check')
+      icon.classList.add('fa-pencil')
+      btn.classList.remove('success')
 
       // save changes
       dino.name = nameField.textContent
       this.save()
     } else {
       nameField.contentEditable = true
+      nameField.focus()
+      icon.classList.remove('fa-pencil')
+      icon.classList.add('fa-check')
+      btn.classList.add('success')
     }
   },
 
