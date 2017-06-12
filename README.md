@@ -35,3 +35,9 @@ Dinosaurs! Yay!
 ### Super Mega Bonus Credit Hyper Fighting
 
 * Have a good weekend.
+
+## Day 5 Homework
+
+Categorize stuff! Separate dino by diet, or era, or whatever! Make a whole new thing with categories, like messages separated into channels! Use your tremendous creativity! Exclamation point!
+
+Or heck, just make separate lists based on the second input field you added in the weekend homework!
