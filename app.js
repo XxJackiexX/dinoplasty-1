@@ -62,14 +62,17 @@ const app = {
     item.classList.remove('template')
     item.dataset.id = dino.id
 
-    item
-      .querySelector('.dino-name')
-      .textContent = dino.name
-
     if (dino.fav) {
       item.classList.add('fav')
     }
 
+    item
+      .querySelector('.dino-name')
+      .textContent = dino.name
+
+    item
+      .querySelector('.dino-name')
+      .addEventListener('keypress', this.saveOnEnter.bind(this, dino))
     item
       .querySelector('button.remove')
       .addEventListener('click', this.removeDino.bind(this))
@@ -86,15 +89,20 @@ const app = {
       .querySelector('button.edit')
       .addEventListener('click', this.editDino.bind(this, dino))
 
-
     return item
+  },
+
+  saveOnEnter(dino, ev) {
+    if (ev.key === 'Enter') {
+      this.editDino(dino, ev)
+    }
   },
 
   editDino(dino, ev) {
     const listItem = ev.target.closest('.dino')
     const nameField = listItem.querySelector('.dino-name')
 
-    const btn = ev.currentTarget
+    const btn = listItem.querySelector('.edit.button')
     const icon = btn.querySelector('i.fa')
 
     if (nameField.isContentEditable) {
