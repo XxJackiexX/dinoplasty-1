@@ -1,5 +1,5 @@
-const app = {
-  init(selectors) {
+class App {
+  constructor(selectors) {
     this.dinos = []
     this.max = 0
     this.list = document
@@ -11,7 +11,7 @@ const app = {
       .addEventListener('submit', this.addDinoFromForm.bind(this))
 
     this.load()
-  },
+  }
 
   load() {
     // load the JSON from localStorage
@@ -26,7 +26,7 @@ const app = {
         .reverse()
         .map(this.addDino.bind(this))
     }
-  },
+  }
 
   addDino(dino) {
     const listItem = this.renderListItem(dino)
@@ -38,7 +38,7 @@ const app = {
     if (dino.id > this.max) {
       this.max = dino.id
     }
-  },
+  }
 
   addDinoFromForm(ev) {
     ev.preventDefault()
@@ -52,12 +52,12 @@ const app = {
     this.addDino(dino)
     
     ev.target.reset()
-  },
+  }
 
   save() {
     localStorage
       .setItem('dinos', JSON.stringify(this.dinos))
-  },
+  }
 
   renderListItem(dino) {
     const item = this.template.cloneNode(true)
@@ -95,13 +95,13 @@ const app = {
       .addEventListener('click', this.editDino.bind(this, dino))
 
     return item
-  },
+  }
 
   saveOnEnter(dino, ev) {
     if (ev.key === 'Enter') {
       this.editDino(dino, ev)
     }
-  },
+  }
 
   editDino(dino, ev) {
     const listItem = ev.target.closest('.dino')
@@ -127,7 +127,7 @@ const app = {
       icon.classList.add('fa-check')
       btn.classList.add('success')
     }
-  },
+  }
 
   moveDown(dino, ev) {
     const listItem = ev.target.closest('.dino')
@@ -144,7 +144,7 @@ const app = {
       this.dinos[index] = nextDino
       this.save()
     }
-  },
+  }
 
   moveUp(dino, ev) {
     const listItem = ev.target.closest('.dino')
@@ -161,7 +161,7 @@ const app = {
       this.dinos[index] = previousDino
       this.save()
     }
-  },
+  }
 
   favDino(dino, ev) {
     const listItem = ev.target.closest('.dino')
@@ -174,7 +174,7 @@ const app = {
     }
 
     this.save()
-  },
+  }
 
   removeDino(ev) {
     const listItem = ev.target.closest('.dino')
@@ -189,10 +189,10 @@ const app = {
     }
 
     this.save()
-  },
+  }
 }
 
-app.init({
+new App({
   formSelector: '#dino-form',
   listSelector: '#dino-list',
   templateSelector: '.dino.template',
