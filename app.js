@@ -79,8 +79,28 @@ const app = {
     item
       .querySelector('button.move-up')
       .addEventListener('click', this.moveUp.bind(this, dino))
+    item
+      .querySelector('button.move-down')
+      .addEventListener('click', this.moveDown.bind(this, dino))
 
     return item
+  },
+
+  moveDown(dino, ev) {
+    const listItem = ev.target.closest('.dino')
+
+    const index = this.dinos.findIndex((currentDino, i) => {
+      return currentDino.id === dino.id
+    })
+
+    if (index < this.dinos.length - 1) {
+      this.list.insertBefore(listItem.nextElementSibling, listItem)
+
+      const nextDino = this.dinos[index + 1]
+      this.dinos[index + 1] = dino
+      this.dinos[index] = nextDino
+      this.save()
+    }
   },
 
   moveUp(dino, ev) {
