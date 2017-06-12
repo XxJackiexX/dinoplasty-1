@@ -35,7 +35,9 @@ const app = {
     this.dinos.unshift(dino)
     this.save()
 
-    ++ this.max
+    if (dino.id > this.max) {
+      this.max = dino.id
+    }
   },
 
   addDinoFromForm(ev) {
