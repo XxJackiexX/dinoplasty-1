@@ -71,6 +71,9 @@ const app = {
     item
       .querySelector('.dino-name')
       .textContent = dino.name
+    item
+      .querySelector('.dino-name')
+      .setAttribute('title', dino.name)
 
     item
       .querySelector('.dino-name')
