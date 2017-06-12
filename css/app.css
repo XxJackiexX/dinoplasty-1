@@ -26,6 +26,10 @@
   text-overflow: ellipsis;
 }
 
+.dino-diet {
+  margin-right: 1rem;
+}
+
 .actions.button-group {
   margin-bottom: 0;
   white-space: nowrap;

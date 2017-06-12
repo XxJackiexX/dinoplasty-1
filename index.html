@@ -15,24 +15,30 @@
       <div class="medium-8 medium-offset-2 column">
         <h1>Dinoplasty</h1>
         <form id="dino-form">
-          <div class="input-group">
-            <input
-              type="text"
-              class="input-group-field"
-              name="dinoName"
-              placeholder="Name a dinosaur"
-              autofocus
-              required
-            >
-            <div class="input-group-button">
+          <div class="row">
+            <div class="small-5 column">
+              <input
+                type="text"
+                name="dinoName"
+                placeholder="Name a dinosaur"
+                autofocus
+                required
+              >
+            </div>
+            <div class="small-4 column">
+              <select name="diet">
+                <option value="">-- Diet --</option>
+                <option value="carnivore">Carnivore</option>
+                <option value="herbivore">Herbivore</option>
+                <option value="omnivore">Omnivore</option>
+              </select>
+            </div>
+            <div class="small-3 column">
               <button
-                class="button success"
+                class="button success expanded"
                 type="submit"
               >
-                <i
-                  class="fa fa-plus"
-                  aria-hidden="true"
-                ></i>
+                Add dino
               </button>
             </div>
           </div>
@@ -48,6 +54,7 @@
 
     <li class="dino template">
       <span class="dino-name"></span>
+      <span class="dino-diet"></span>
       <span class="actions button-group">
         <button class="edit button">
           <i

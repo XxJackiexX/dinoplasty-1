@@ -47,6 +47,7 @@ class App {
       id: this.max + 1,
       name: ev.target.dinoName.value,
       fav: false,
+      diet: ev.target.diet.value,
     }
 
     this.addDino(dino)
@@ -68,6 +69,12 @@ class App {
       item.classList.add('fav')
     }
 
+    if (dino.diet) {
+      item
+        .querySelector('.dino-diet')
+        .textContent = dino.diet
+    }
+
     item
       .querySelector('.dino-name')
       .textContent = dino.name
@@ -78,6 +85,10 @@ class App {
     item
       .querySelector('.dino-name')
       .addEventListener('keypress', this.saveOnEnter.bind(this, dino))
+    item
+      .querySelector('.dino-diet')
+      .addEventListener('keypress', this.saveOnEnter.bind(this, dino))
+
     item
       .querySelector('button.remove')
       .addEventListener('click', this.removeDino.bind(this))
@@ -106,6 +117,7 @@ class App {
   editDino(dino, ev) {
     const listItem = ev.target.closest('.dino')
     const nameField = listItem.querySelector('.dino-name')
+    const dietField = listItem.querySelector('.dino-diet')
 
     const btn = listItem.querySelector('.edit.button')
     const icon = btn.querySelector('i.fa')
@@ -113,15 +125,18 @@ class App {
     if (nameField.isContentEditable) {
       // make it no longer editable
       nameField.contentEditable = false
+      dietField.contentEditable = false
       icon.classList.remove('fa-check')
       icon.classList.add('fa-pencil')
       btn.classList.remove('success')
 
       // save changes
       dino.name = nameField.textContent
+      dino.diet = dietField.textContent
       this.save()
     } else {
       nameField.contentEditable = true
+      dietField.contentEditable = true
       nameField.focus()
       icon.classList.remove('fa-pencil')
       icon.classList.add('fa-check')
@@ -192,7 +207,7 @@ class App {
   }
 }
 
-new App({
+const app = new App({
   formSelector: '#dino-form',
   listSelector: '#dino-list',
   templateSelector: '.dino.template',
