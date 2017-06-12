@@ -44,6 +44,7 @@ const app = {
     const dino = {
       id: this.max + 1,
       name: ev.target.dinoName.value,
+      fav: false,
     }
 
     this.addDino(dino)
@@ -65,11 +66,31 @@ const app = {
       .querySelector('.dino-name')
       .textContent = dino.name
 
+    if (dino.fav) {
+      item.classList.add('fav')
+    }
+
     item
       .querySelector('button.remove')
       .addEventListener('click', this.removeDino.bind(this))
+    item
+      .querySelector('button.fav')
+      .addEventListener('click', this.favDino.bind(this, dino))
 
     return item
+  },
+
+  favDino(dino, ev) {
+    const listItem = ev.target.closest('.dino')
+    dino.fav = !dino.fav
+
+    if (dino.fav) {
+      listItem.classList.add('fav')
+    } else {
+      listItem.classList.remove('fav')
+    }
+
+    this.save()
   },
 
   removeDino(ev) {
