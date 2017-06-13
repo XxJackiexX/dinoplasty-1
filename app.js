@@ -2,27 +2,30 @@ class App {
   constructor(selectors) {
     this.dinos = {}
     this.max = 0
-    this.lists = {
-      carnivore: document
-                   .querySelector(`#carnivore ${selectors.listSelector}`),
-      herbivore: document
-                   .querySelector(`#herbivore ${selectors.listSelector}`),
-      omnivore: document
-                   .querySelector(`#omnivore ${selectors.listSelector}`)
-    }
 
-    document
-      .querySelector(selectors.listSelector)
     this.template = document
       .querySelector(selectors.templateSelector)
+
+    this.setupLists(selectors.listSelector)
+    this.listen(selectors)
+    this.load()
+  }
+
+  setupLists(listSelector) {
+    this.lists = {}
+    const diets = ['carnivore', 'herbivore', 'omnivore']
+    diets.map(diet => {
+      this.lists[diet] = document.querySelector(`#${diet} ${listSelector}`)
+    })
+  }
+
+  listen(selectors) {
     document
       .querySelector(selectors.formSelector)
       .addEventListener('submit', this.addDinoFromForm.bind(this))
     document
-      .querySelector('.search input')
+      .querySelector(selectors.searchSelector)
       .addEventListener('keyup', this.search.bind(this))
-
-    this.load()
   }
 
   load() {
@@ -58,7 +61,6 @@ class App {
   }
 
   removeElements(elementArr) {
-    console.log(elementArr)
     elementArr.map(el => {
       const parent = el.parentNode
       while(el.firstChild) {
@@ -252,6 +254,7 @@ const app = new App({
   formSelector: '#dino-form',
   listSelector: '.dino-list',
   templateSelector: '.dino.template',
+  searchSelector: '.search input',
 })
 
 $(document).foundation()
