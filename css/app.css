@@ -1,3 +1,14 @@
+@import url('https://fonts.googleapis.com/css?family=Modak');
+
+h1 {
+  font-family: Modak, cursive;
+  text-transform: lowercase;
+}
+
+h1 span {
+  color: #cc4b37;
+}
+
 ul.dino-list {
   margin: 0;
 }
