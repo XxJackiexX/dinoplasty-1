@@ -50,9 +50,9 @@ class App {
 
     Array.from(document.querySelectorAll('.dino')).map(listItem => {
       const nameField = listItem.querySelector('.dino-name')
-      if (nameField.textContent.toLowerCase().includes(q)) {
+      const pattern = new RegExp(q, 'gi')
+      if (nameField.textContent.match(pattern)) {
         listItem.classList.remove('hide')
-        const pattern = new RegExp(q, 'gi')
         nameField.innerHTML = nameField.innerHTML.replace(pattern, '<strong>$&</strong>')
       } else {
         listItem.classList.add('hide')
