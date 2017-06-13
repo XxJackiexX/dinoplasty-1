@@ -158,7 +158,6 @@ class App {
   editDino(dino, ev) {
     const listItem = ev.target.closest('.dino')
     const nameField = listItem.querySelector('.dino-name')
-    const dietField = listItem.querySelector('.dino-diet')
 
     const btn = listItem.querySelector('.edit.button')
     const icon = btn.querySelector('i.fa')
@@ -172,7 +171,6 @@ class App {
 
       // save changes
       dino.name = nameField.textContent
-      dino.diet = dietField.textContent
       this.save()
     } else {
       nameField.contentEditable = true
