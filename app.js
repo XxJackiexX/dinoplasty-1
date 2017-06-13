@@ -18,6 +18,9 @@ class App {
     document
       .querySelector(selectors.formSelector)
       .addEventListener('submit', this.addDinoFromForm.bind(this))
+    document
+      .querySelector('.search input')
+      .addEventListener('keyup', this.search.bind(this))
 
     this.load()
   }
@@ -35,6 +38,34 @@ class App {
         .reverse()
         .map(this.addDino.bind(this))
     }
+  }
+
+  search(ev) {
+    const q = ev.currentTarget.value.toLowerCase()
+    const prevMatches = Array.from(document.querySelectorAll('.dino-name strong'))
+    this.removeElements(prevMatches)
+
+    Array.from(document.querySelectorAll('.dino')).map(listItem => {
+      const nameField = listItem.querySelector('.dino-name')
+      if (nameField.textContent.toLowerCase().includes(q)) {
+        listItem.classList.remove('hide')
+        const pattern = new RegExp(q, 'gi')
+        nameField.innerHTML = nameField.innerHTML.replace(pattern, '<strong>$&</strong>')
+      } else {
+        listItem.classList.add('hide')
+      }
+    })
+  }
+
+  removeElements(elementArr) {
+    console.log(elementArr)
+    elementArr.map(el => {
+      const parent = el.parentNode
+      while(el.firstChild) {
+        parent.insertBefore(el.firstChild, el)
+      }
+      el.remove()
+    })
   }
 
   addDino(dino) {
