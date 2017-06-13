@@ -12,7 +12,7 @@
   </head>
   <body>
     <div class="row">
-      <div class="medium-8 medium-offset-2 column">
+      <div class="medium-10 medium-offset-1 column">
         <h1><span>Dino</span>plasty</h1>
         <form id="dino-form">
           <div class="row">
@@ -47,11 +47,27 @@
     </div>
 
     <div class="row">
-      <div class="medium-8 medium-offset-2 column">
+      <div class="medium-10 medium-offset-1 column">
         <ul class="tabs" data-tabs id="diets">
           <li class="tabs-title is-active"><a href="#carnivore" aria-selected="true">Carnivores</a></li>
           <li class="tabs-title"><a href="#herbivore">Herbivores</a></li>
           <li class="tabs-title"><a href="#omnivore">Omnivores</a></li>
+          <li class="search">
+            <div class="input-group">
+              <span class="input-group-label">
+                <i
+                  class="fa fa-search"
+                  aria-hidden="true"
+                ></i>
+              </span>
+              <input
+                class="input-group-field"
+                type="text"
+                name="q"
+                placeholder="Filter"
+              >
+            </div>
+          </li>
         </ul>
         <div class="tabs-content" data-tabs-content="diets">
           <div class="tabs-panel is-active" id="carnivore">
