@@ -26,7 +26,7 @@
               >
             </div>
             <div class="small-4 column">
-              <select name="diet">
+              <select name="diet" required>
                 <option value="">-- Diet --</option>
                 <option value="carnivore">Carnivore</option>
                 <option value="herbivore">Herbivore</option>
@@ -48,13 +48,27 @@
 
     <div class="row">
       <div class="medium-8 medium-offset-2 column">
-        <ul id="dino-list" class="no-bullet"></ul>
+        <ul class="tabs" data-tabs id="diets">
+          <li class="tabs-title is-active"><a href="#carnivore" aria-selected="true">Carnivores</a></li>
+          <li class="tabs-title"><a href="#herbivore">Herbivores</a></li>
+          <li class="tabs-title"><a href="#omnivore">Omnivores</a></li>
+        </ul>
+        <div class="tabs-content" data-tabs-content="diets">
+          <div class="tabs-panel is-active" id="carnivore">
+            <ul class="dino-list" class="no-bullet"></ul>
+          </div>
+          <div class="tabs-panel" id="herbivore">
+            <ul class="dino-list" class="no-bullet"></ul>
+          </div>
+          <div class="tabs-panel" id="omnivore">
+            <ul class="dino-list" class="no-bullet"></ul>
+          </div>
+        </div>
       </div>
     </div>
 
     <li class="dino template">
       <span class="dino-name"></span>
-      <span class="dino-diet"></span>
       <span class="actions button-group">
         <button class="edit button">
           <i
@@ -89,6 +103,8 @@
       </span>
     </li>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.1/js/foundation.min.js" integrity="sha256-Nd2xznOkrE9HkrAMi4xWy/hXkQraXioBg9iYsBrcFrs=" crossorigin="anonymous"></script>
     <script src="app.js"></script>
   </body>
 </html>

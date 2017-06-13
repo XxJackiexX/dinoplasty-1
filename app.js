@@ -1,8 +1,17 @@
 class App {
   constructor(selectors) {
-    this.dinos = []
+    this.dinos = {}
     this.max = 0
-    this.list = document
+    this.lists = {
+      carnivore: document
+                   .querySelector(`#carnivore ${selectors.listSelector}`),
+      herbivore: document
+                   .querySelector(`#herbivore ${selectors.listSelector}`),
+      omnivore: document
+                   .querySelector(`#omnivore ${selectors.listSelector}`)
+    }
+
+    document
       .querySelector(selectors.listSelector)
     this.template = document
       .querySelector(selectors.templateSelector)
@@ -30,9 +39,14 @@ class App {
 
   addDino(dino) {
     const listItem = this.renderListItem(dino)
-    this.list.insertBefore(listItem, this.list.firstChild)
+    
+    this.lists[dino.diet].insertBefore(listItem, this.lists[dino.diet].firstChild)
 
-    this.dinos.unshift(dino)
+    if (!this.dinos[dino.diet]) {
+      this.dinos[dino.diet] = []
+    }
+
+    this.dinos[dino.diet].unshift(dino)
     this.save()
 
     if (dino.id > this.max) {
@@ -53,11 +67,14 @@ class App {
     this.addDino(dino)
     
     ev.target.reset()
+    ev.target.dinoName.focus()
   }
 
   save() {
     localStorage
-      .setItem('dinos', JSON.stringify(this.dinos))
+      .setItem('dinos', JSON.stringify(Object.keys(this.dinos).reduce((combined, diet) => {
+        return combined.concat(this.dinos[diet])
+      }, [])))
   }
 
   renderListItem(dino) {
@@ -67,12 +84,6 @@ class App {
 
     if (dino.fav) {
       item.classList.add('fav')
-    }
-
-    if (dino.diet) {
-      item
-        .querySelector('.dino-diet')
-        .textContent = dino.diet
     }
 
     item
@@ -85,13 +96,10 @@ class App {
     item
       .querySelector('.dino-name')
       .addEventListener('keypress', this.saveOnEnter.bind(this, dino))
-    item
-      .querySelector('.dino-diet')
-      .addEventListener('keypress', this.saveOnEnter.bind(this, dino))
 
     item
       .querySelector('button.remove')
-      .addEventListener('click', this.removeDino.bind(this))
+      .addEventListener('click', this.removeDino.bind(this, dino))
     item
       .querySelector('button.fav')
       .addEventListener('click', this.favDino.bind(this, dino))
@@ -125,7 +133,6 @@ class App {
     if (nameField.isContentEditable) {
       // make it no longer editable
       nameField.contentEditable = false
-      dietField.contentEditable = false
       icon.classList.remove('fa-check')
       icon.classList.add('fa-pencil')
       btn.classList.remove('success')
@@ -136,7 +143,6 @@ class App {
       this.save()
     } else {
       nameField.contentEditable = true
-      dietField.contentEditable = true
       nameField.focus()
       icon.classList.remove('fa-pencil')
       icon.classList.add('fa-check')
@@ -146,34 +152,36 @@ class App {
 
   moveDown(dino, ev) {
     const listItem = ev.target.closest('.dino')
+    const dinoArr = this.dinos[dino.diet]
 
-    const index = this.dinos.findIndex((currentDino, i) => {
+    const index = dinoArr.findIndex((currentDino, i) => {
       return currentDino.id === dino.id
     })
 
-    if (index < this.dinos.length - 1) {
-      this.list.insertBefore(listItem.nextElementSibling, listItem)
+    if (index < dinoArr.length - 1) {
+      this.lists[dino.diet].insertBefore(listItem.nextElementSibling, listItem)
 
-      const nextDino = this.dinos[index + 1]
-      this.dinos[index + 1] = dino
-      this.dinos[index] = nextDino
+      const nextDino = dinoArr[index + 1]
+      dinoArr[index + 1] = dino
+      dinoArr[index] = nextDino
       this.save()
     }
   }
 
   moveUp(dino, ev) {
     const listItem = ev.target.closest('.dino')
+    const dinoArr = this.dinos[dino.diet]
 
-    const index = this.dinos.findIndex((currentDino, i) => {
+    const index = dinoArr.findIndex((currentDino, i) => {
       return currentDino.id === dino.id
     })
 
     if (index > 0) {
-      this.list.insertBefore(listItem, listItem.previousElementSibling)
+      this.lists[dino.diet].insertBefore(listItem, listItem.previousElementSibling)
 
-      const previousDino = this.dinos[index - 1]
-      this.dinos[index - 1] = dino
-      this.dinos[index] = previousDino
+      const previousDino = dinoArr[index - 1]
+      dinoArr[index - 1] = dino
+      dinoArr[index] = previousDino
       this.save()
     }
   }
@@ -191,14 +199,16 @@ class App {
     this.save()
   }
 
-  removeDino(ev) {
+  removeDino(dino, ev) {
     const listItem = ev.target.closest('.dino')
     listItem.remove()
 
-    for (let i = 0; i < this.dinos.length; i++) {
-      const currentId = this.dinos[i].id.toString()
+    const dinoArr = this.dinos[dino.diet]
+
+    for (let i = 0; i < dinoArr.length; i++) {
+      const currentId = dinoArr[i].id.toString()
       if (listItem.dataset.id === currentId) {
-        this.dinos.splice(i, 1)
+        dinoArr.splice(i, 1)
         break;
       }
     }
@@ -209,6 +219,8 @@ class App {
 
 const app = new App({
   formSelector: '#dino-form',
-  listSelector: '#dino-list',
+  listSelector: '.dino-list',
   templateSelector: '.dino.template',
 })
+
+$(document).foundation()
