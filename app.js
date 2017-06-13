@@ -44,7 +44,7 @@ class App {
   }
 
   search(ev) {
-    const q = ev.currentTarget.value.toLowerCase()
+    const q = ev.currentTarget.value
     const prevMatches = Array.from(document.querySelectorAll('.dino-name strong'))
     this.removeElements(prevMatches)
 
