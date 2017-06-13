@@ -37,6 +37,11 @@ ul.dino-list {
 
 .actions .button {
   padding: 0.65em 0.8em;
+  transition: 0.25s;
+}
+
+.actions .button:hover {
+  transform: scale(1.1);
 }
 
 .dino.fav {
